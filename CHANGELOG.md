@@ -1,3 +1,9 @@
+## [1.0.12]
+
+### Update
+
+- Repository renamed to [LemurDaniel/VSCode__terraform_quick_docs](https://github.com/LemurDaniel/VSCode__terraform_quick_docs); updated repository, homepage and bugs links
+
 ## [1.0.11]
 
 ### Update
