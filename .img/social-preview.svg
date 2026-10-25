@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b1d6e"/><stop offset="1" stop-color="#7b42bc"/></linearGradient></defs>
+  <rect width="1280" height="640" fill="url(#g)"/>
+  <g transform="translate(110 192) scale(1.0)"><svg width="256" height="256" viewBox="0 0 256 256">
+    <rect x="48" y="40" width="124" height="160" rx="14" fill="#fff"/>
+    <g fill="#7b42bc"><rect x="66" y="64" width="60" height="12" rx="6"/><rect x="66" y="92" width="88" height="10" rx="5" opacity=".55"/><rect x="66" y="114" width="72" height="10" rx="5" opacity=".55"/><rect x="66" y="136" width="80" height="10" rx="5" opacity=".55"/></g>
+    <circle cx="168" cy="164" r="44" fill="#ffc83d"/>
+    <path d="M148 164l-10 0m10 0l12-14m-12 14l12 14m20-28l12 14-12 14" fill="none" stroke="#3b1d6e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" transform="translate(-6 0)"/></svg></g>
+  <text x="400" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="76" font-weight="700" fill="#fff">Terraform Quick Docs</text>
+  <text x="404" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="40" fill="#e6d9f7">Provider &amp; function docs, one hover away.</text>
+  <text x="404" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="30" fill="#ffc83d">VS Code Extension</text>
+</svg>

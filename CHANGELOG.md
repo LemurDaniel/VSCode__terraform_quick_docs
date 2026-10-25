@@ -1,3 +1,10 @@
+## [1.0.13]
+
+### Update
+
+- New icon, improved Marketplace metadata (description, keywords, categories, gallery banner)
+- README badges and feedback section
+
 ## [1.0.12]
 
 ### Update

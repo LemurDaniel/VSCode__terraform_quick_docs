@@ -1,0 +1,9 @@
+name: Feature request / missing provider
+description: Suggest an idea or ask for a provider to be added
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to see?
+    validations: { required: true }

@@ -1,11 +1,11 @@
 {
     "name": "terraform-quick-docs",
-    "displayName": "Terraform Quick Docs",
-    "description": "Access Terraform Provider and Function Documentations by hovering over Resources.",
+    "displayName": "Terraform Quick Docs - Provider & Function Documentation",
+    "description": "Terraform documentation in VS Code: open provider, resource, data source and function docs by hovering over HCL code.",
     "author": "LemurDaniel",
     "publisher": "LemurDaniel",
     "license": "MIT",
-    "icon": ".resources/simple_logo.png",
+    "icon": ".resources/icon.png",
     "homepage": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs#readme",
     "bugs": {
         "url": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs/issues"
@@ -14,19 +14,38 @@
         "type": "git",
         "url": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs"
     },
-    "version": "1.0.12",
+    "version": "1.0.13",
     "engines": {
         "vscode": "^1.82.0"
     },
     "categories": [
+        "Programming Languages",
         "Other"
     ],
     "keywords": [
         "terraform",
-        "documentation",
-        "tf",
+        "opentofu",
         "hcl",
-        "devops"
+        "tf",
+        "documentation",
+        "docs",
+        "hover",
+        "provider",
+        "registry",
+        "resource",
+        "data source",
+        "function",
+        "azurerm",
+        "aws",
+        "google",
+        "azure",
+        "iac",
+        "infrastructure as code",
+        "devops",
+        "cloud",
+        "reference",
+        "tooltip",
+        "terraform registry"
     ],
     "activationEvents": [
         "workspaceContains:**/*.tf"
@@ -112,8 +131,7 @@
         "webpack-dev": "webpack --mode development --watch",
         "package": "webpack --mode production --devtool hidden-source-map",
         "lint": "eslint \"./client/src/**/*.js\" \"./server/src/**/*.js\"",
-        "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-        "test": "sh ./scripts/e2e.sh"
+        "postinstall": "cd client && npm install && cd ../server && npm install && cd .."
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",
@@ -127,5 +145,10 @@
         "path": "^0.12.7",
         "webpack": "^5.107.0",
         "webpack-cli": "^7.0.2"
-    }
+    },
+    "galleryBanner": {
+        "color": "#3b1d6e",
+        "theme": "dark"
+    },
+    "qna": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs/issues"
 }
