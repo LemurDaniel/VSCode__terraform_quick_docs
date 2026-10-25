@@ -9,4 +9,5 @@
   <text x="400" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="76" font-weight="700" fill="#fff">Terraform Quick Docs</text>
   <text x="404" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="40" fill="#e6d9f7">Provider &amp; function docs, one hover away.</text>
   <text x="404" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="30" fill="#ffc83d">VS Code Extension</text>
+  <text x="404" y="600" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#cbb8ee">AI notice: icon and artwork were created with AI assistance (Claude).</text>
 </svg>
