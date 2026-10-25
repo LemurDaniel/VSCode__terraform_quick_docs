@@ -1,6 +1,4 @@
-<p al🤖 **AI Notice:** Originally written by hand, with love, sweat and an unreasonable amount of `console.log`. Resurrected in 2026 with the help of an AI, which fixed the bugs, deleted the dead code and politely refused to judge the original variable names.
-
-ign="center"><img src=".resources/icon.png" width="96" alt="Terraform Quick Docs"></p>
+<p align="center"><img src=".resources/icon.png" width="96" alt="Terraform Quick Docs"></p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=LemurDaniel.terraform-quick-docs"><img src="https://vsmarketplacebadges.dev/version-short/LemurDaniel.terraform-quick-docs.svg" alt="Version"></a>
@@ -8,6 +6,7 @@ ign="center"><img src=".resources/icon.png" width="96" alt="Terraform Quick Docs
   <a href="LICENSE"><img src="https://img.shields.io/github/license/LemurDaniel/VSCode__terraform_quick_docs" alt="License"></a>
 </p>
 
+🤖 **AI Notice:** Originally written by hand, with love, sweat and an unreasonable amount of `console.log`. Resurrected in 2026 with the help of an AI, which fixed the bugs, deleted the dead code and politely refused to judge the original variable names.
 
 ## 🚀 Access Documentations by Hovering! 🚀
 
