@@ -14,7 +14,7 @@
         "type": "git",
         "url": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs"
     },
-    "version": "1.0.13",
+    "version": "1.0.14",
     "engines": {
         "vscode": "^1.82.0"
     },

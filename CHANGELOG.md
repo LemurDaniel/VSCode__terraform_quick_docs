@@ -1,3 +1,9 @@
+## [1.0.14]
+
+### Update
+
+- README: AI notice, social preview with AI badge
+
 ## [1.0.13]
 
 ### Update
