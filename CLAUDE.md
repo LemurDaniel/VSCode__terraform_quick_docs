@@ -8,10 +8,10 @@ Marketplace: `LemurDaniel.terraform-quick-docs` · Repo: LemurDaniel/VSCode__ter
 - Kein Testframework vorhanden
 
 ## Release
-- Pipeline `.github/workflows/package.yaml` (`workflow_dispatch`, `skip_publish=false` auf master): vsce package → publish. Bewusst keine GitHub Releases (Speicher)
+- Pipeline `.github/workflows/package.yaml`: Push auf master (client/server/package*.json) → vsce publish. Manuell: `workflow_dispatch` mit `skip_publish=false`. Version vor Merge bumpen, sonst schlägt Publish fehl. Bewusst keine GitHub Releases (Speicher)
 - Version in package.json + package-lock.json + CHANGELOG (`## [<version>]`) pflegen
 - Provider-Updates laufen automatisch (`providerCheck.yaml`)
-- Security: `securityCheck.yaml` (So 03:00) → `npm audit fix --force` → PR auf Branch `automated_security_audit_fix`, kein Auto-Merge/Publish. Nach Review mergen und `package.yaml` manuell starten
+- Security: `securityCheck.yaml` (So 03:00) → `npm audit fix --force` → PR auf Branch `automated_security_audit_fix`, kein Auto-Merge/Publish. Nach Review mergen → Push-Trigger veröffentlicht
 
 ## Konventionen
 - Commits: Name `LemurDaniel`, Mail `landau.daniel.1998@gmail.com`
