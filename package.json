@@ -136,12 +136,10 @@
     "devDependencies": {
         "@eslint/js": "^9.39.4",
         "@resvg/resvg-wasm": "^2.6.2",
-        "@types/mocha": "^10.0.10",
         "@types/node": "^22.10.0",
         "@typescript-eslint/eslint-plugin": "^8.59.4",
         "@typescript-eslint/parser": "^8.59.4",
         "eslint": "^9.0.0",
-        "mocha": "^5.0.5",
         "path": "^0.12.7",
         "webpack": "^5.107.0",
         "webpack-cli": "^7.0.2"
@@ -150,5 +148,8 @@
         "color": "#3b1d6e",
         "theme": "dark"
     },
-    "qna": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs/issues"
+    "qna": "https://github.com/LemurDaniel/VSCode__terraform_quick_docs/issues",
+    "overrides": {
+        "minimatch": "^11.0.3"
+    }
 }

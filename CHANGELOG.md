@@ -2,7 +2,7 @@
 
 ### Update
 
-- Security: dependency updates via `npm audit fix --force`
+- Security: remove unused `mocha`, override `minimatch` to `^11.0.3` (fixes all open Dependabot alerts)
 
 ## [1.0.15]
 
