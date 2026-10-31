@@ -31,6 +31,8 @@ env:
 
 jobs:
   build:
+    # Automated PRs (securityCheck/providerCheck) are merged instantly and dispatch this workflow themselves
+    if: ${{ !contains(github.head_ref, 'automated_') }}
 
     runs-on: ubuntu-latest
     permissions:
