@@ -1,3 +1,9 @@
+## [1.0.16]
+
+### Update
+
+- Security: dependency updates via `npm audit fix --force`
+
 ## [1.0.15]
 
 ### Update
