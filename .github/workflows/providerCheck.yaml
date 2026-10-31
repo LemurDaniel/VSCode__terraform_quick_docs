@@ -100,7 +100,9 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: 'package.yaml',
-                ref: 'master'
+                ref: 'master',
+                // Merges via GITHUB_TOKEN don't trigger the push trigger, so publish explicitly
+                inputs: { skip_publish: 'false' }
               })
 
               console.log(dispatch)
