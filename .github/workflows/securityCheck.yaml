@@ -35,7 +35,7 @@ jobs:
           $summary = foreach ($package in $packages) {
             Push-Location $package
             $before = (npm audit --json | ConvertFrom-Json).metadata.vulnerabilities.total
-            npm audit fix --force
+            npm audit fix --force | Out-Host
             $after = (npm audit --json | ConvertFrom-Json).metadata.vulnerabilities.total
             Pop-Location
             "| $package | $before | $after |"
