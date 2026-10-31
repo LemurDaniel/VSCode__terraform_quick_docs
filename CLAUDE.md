@@ -11,7 +11,7 @@ Marketplace: `LemurDaniel.terraform-quick-docs` · Repo: LemurDaniel/VSCode__ter
 - Pipeline `.github/workflows/package.yaml` (`workflow_dispatch`, `skip_publish=false` auf master): vsce package → publish. Bewusst keine GitHub Releases (Speicher)
 - Version in package.json + package-lock.json + CHANGELOG (`## [<version>]`) pflegen
 - Provider-Updates laufen automatisch (`providerCheck.yaml`)
-- Security: `securityCheck.yaml` (So 03:00) → `npm audit fix --force` → PR auf Branch `security_audit_fix`, kein Auto-Merge/Publish. Nach Review mergen und `package.yaml` manuell starten
+- Security: `securityCheck.yaml` (So 03:00) → `npm audit fix --force` → PR auf Branch `automated_security_audit_fix`, kein Auto-Merge/Publish. Nach Review mergen und `package.yaml` manuell starten
 
 ## Konventionen
 - Commits: Name `LemurDaniel`, Mail `landau.daniel.1998@gmail.com`

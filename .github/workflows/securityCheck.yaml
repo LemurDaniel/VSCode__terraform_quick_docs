@@ -41,7 +41,7 @@ jobs:
             "| $package | $before | $after |"
           }
 
-          "| Package | Before | After |", "|---|---|---|", $summary, "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          "| Package | Before | After |", "|---|---|---|", $summary, "" | Tee-Object "$env:RUNNER_TEMP/pr-body.md" -Append | Out-File $env:GITHUB_STEP_SUMMARY -Append
 
           $changed = [bool](git status --porcelain -- '*package-lock.json' '*package.json')
           "changed=$($changed.ToString().ToLower())" >> $env:GITHUB_OUTPUT
@@ -75,7 +75,7 @@ jobs:
           $breaking = [bool]$rows
           "breaking=$($breaking.ToString().ToLower())" >> $env:GITHUB_OUTPUT
           if ($breaking) {
-            "### ⚠️ Breaking changes", "| Package | Dependency | Before | After |", "|---|---|---|---|", $rows, "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
+            "### ⚠️ Breaking changes", "| Package | Dependency | Before | After |", "|---|---|---|---|", $rows, "" | Tee-Object "$env:RUNNER_TEMP/pr-body.md" -Append | Out-File $env:GITHUB_STEP_SUMMARY -Append
           }
 
       - name: Verify lint and build
@@ -87,8 +87,8 @@ jobs:
           npm run package *> build.log
           $build = $LASTEXITCODE
 
-          "### Checks", "- lint: $(($lint -eq 0) ? '✅' : '❌')", "- build: $(($build -eq 0) ? '✅' : '❌')", "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
-          "### package.json changes", '```diff', (git diff -- '*package.json'), '```' | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          "### Checks", "- lint: $(($lint -eq 0) ? '✅' : '❌')", "- build: $(($build -eq 0) ? '✅' : '❌')", "" | Tee-Object "$env:RUNNER_TEMP/pr-body.md" -Append | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          "### package.json changes", '```diff', (git diff -- '*package.json'), '```' | Tee-Object "$env:RUNNER_TEMP/pr-body.md" -Append | Out-File $env:GITHUB_STEP_SUMMARY -Append
           Remove-Item lint.log, build.log
           exit 0
 
@@ -109,7 +109,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BREAKING: ${{ steps.breaking.outputs.breaking }}
         run: |
-          $branch = "security_audit_fix"
+          # automated_ prefix skips the pull_request build in package.yaml
+          $branch = "automated_security_audit_fix"
 
           git config --global user.email "landau.daniel.1998@gmail.com"
           git config --global user.name "LemurDaniel"
@@ -121,10 +122,10 @@ jobs:
 
           $title = "Security: npm audit fix ($env:VERSION)"
           if (gh pr list --head $branch --state open --json number --jq '.[].number') {
-            gh pr edit $branch --title $title --body-file $env:GITHUB_STEP_SUMMARY
+            gh pr edit $branch --title $title --body-file "$env:RUNNER_TEMP/pr-body.md"
           }
           else {
-            gh pr create --base master --head $branch --title $title --body-file $env:GITHUB_STEP_SUMMARY
+            gh pr create --base master --head $branch --title $title --body-file "$env:RUNNER_TEMP/pr-body.md"
           }
 
           gh label create breaking-change --color B60205 --description "Major version changes in dependencies" --force
