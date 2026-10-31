@@ -18,5 +18,8 @@
     "devDependencies": {
         "@types/vscode": "^1.82.0",
         "@vscode/test-electron": "^2.5.2"
+    },
+    "overrides": {
+        "minimatch": "^11.0.3"
     }
 }
