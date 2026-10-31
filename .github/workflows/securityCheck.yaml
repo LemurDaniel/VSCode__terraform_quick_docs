@@ -46,6 +46,38 @@ jobs:
           $changed = [bool](git status --porcelain -- '*package-lock.json' '*package.json')
           "changed=$($changed.ToString().ToLower())" >> $env:GITHUB_OUTPUT
 
+      - name: Detect breaking changes
+        id: breaking
+        if: steps.audit.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          # Major of a semver range, 0.x counts minor as major
+          function Get-Major([string] $range) {
+            if ($range -match '(\d+)(?:\.(\d+))?') { ($Matches[1] -eq '0') ? "0.$($Matches[2])" : $Matches[1] }
+          }
+
+          $rows = foreach ($package in '.', 'client', 'server') {
+            $path = "$package/package.json" -replace '^\./', ''
+            $old = git show "HEAD:$path" | ConvertFrom-Json
+            $new = Get-Content $path | ConvertFrom-Json
+
+            foreach ($type in 'dependencies', 'devDependencies') {
+              $oldDeps = $old.$type.PSObject.Properties
+              foreach ($dep in $oldDeps) {
+                $newRange = $new.$type.($dep.Name)
+                if ((Get-Major $dep.Value) -ne (Get-Major $newRange)) {
+                  "| $package | $($dep.Name) | $($dep.Value) | $($newRange ?? 'removed') |"
+                }
+              }
+            }
+          }
+
+          $breaking = [bool]$rows
+          "breaking=$($breaking.ToString().ToLower())" >> $env:GITHUB_OUTPUT
+          if ($breaking) {
+            "### ⚠️ Breaking changes", "| Package | Dependency | Before | After |", "|---|---|---|---|", $rows, "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          }
+
       - name: Verify lint and build
         if: steps.audit.outputs.changed == 'true'
         shell: pwsh
@@ -75,6 +107,7 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          BREAKING: ${{ steps.breaking.outputs.breaking }}
         run: |
           $branch = "security_audit_fix"
 
@@ -92,4 +125,13 @@ jobs:
           }
           else {
             gh pr create --base master --head $branch --title $title --body-file $env:GITHUB_STEP_SUMMARY
+          }
+
+          gh label create breaking-change --color B60205 --description "Major version changes in dependencies" --force
+          if ($env:BREAKING -eq 'true') {
+            gh pr edit $branch --add-label breaking-change
+          }
+          else {
+            gh pr edit $branch --remove-label breaking-change 2>$null
+            exit 0
           }
