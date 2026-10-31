@@ -8,7 +8,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  actions: write
 
 jobs:
   audit:
@@ -28,7 +27,7 @@ jobs:
         run: |
           npm install
 
-      - name: Audit and fix
+      - name: Audit and fix (including breaking changes)
         id: audit
         shell: pwsh
         run: |
@@ -36,16 +35,30 @@ jobs:
           $summary = foreach ($package in $packages) {
             Push-Location $package
             $before = (npm audit --json | ConvertFrom-Json).metadata.vulnerabilities.total
-            npm audit fix
+            npm audit fix --force
             $after = (npm audit --json | ConvertFrom-Json).metadata.vulnerabilities.total
             Pop-Location
             "| $package | $before | $after |"
           }
 
-          "| Package | Before | After |", "|---|---|---|", $summary | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          "| Package | Before | After |", "|---|---|---|", $summary, "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
 
           $changed = [bool](git status --porcelain -- '*package-lock.json' '*package.json')
           "changed=$($changed.ToString().ToLower())" >> $env:GITHUB_OUTPUT
+
+      - name: Verify lint and build
+        if: steps.audit.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          npm run lint *> lint.log
+          $lint = $LASTEXITCODE
+          npm run package *> build.log
+          $build = $LASTEXITCODE
+
+          "### Checks", "- lint: $(($lint -eq 0) ? '✅' : '❌')", "- build: $(($build -eq 0) ? '✅' : '❌')", "" | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          "### package.json changes", '```diff', (git diff -- '*package.json'), '```' | Out-File $env:GITHUB_STEP_SUMMARY -Append
+          Remove-Item lint.log, build.log
+          exit 0
 
       - name: Bump version and changelog
         if: steps.audit.outputs.changed == 'true'
@@ -53,17 +66,17 @@ jobs:
         run: |
           npm version patch --no-git-tag-version
           $version = (Get-Content package.json | ConvertFrom-Json).version
-          $entry = "## [$version]`n`n### Update`n`n- Security: dependency updates via ``npm audit fix```n`n"
+          $entry = "## [$version]`n`n### Update`n`n- Security: dependency updates via ``npm audit fix --force```n`n"
           Set-Content CHANGELOG.md -Value ($entry + (Get-Content CHANGELOG.md -Raw)) -NoNewline
           "VERSION=$version" >> $env:GITHUB_ENV
 
-      - name: Create and merge Pull-Request
+      - name: Create Pull-Request
         if: steps.audit.outputs.changed == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $branch = "automated_security_audit_fix_$env:VERSION"
+          $branch = "security_audit_fix"
 
           git config --global user.email "landau.daniel.1998@gmail.com"
           git config --global user.name "LemurDaniel"
@@ -71,14 +84,12 @@ jobs:
           git checkout -B $branch
           git add -A
           git commit -m "Security: npm audit fix ($env:VERSION)"
-          git push --set-upstream origin $branch
+          git push --force --set-upstream origin $branch
 
-          gh pr create --base master --head $branch --title "Security: npm audit fix ($env:VERSION)" --body-file $env:GITHUB_STEP_SUMMARY
-          gh pr merge $branch --squash --delete-branch
-
-      - name: Dispatch deployment workflow
-        if: steps.audit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh workflow run package.yaml --ref master -f skip_publish=false
+          $title = "Security: npm audit fix ($env:VERSION)"
+          if (gh pr list --head $branch --state open --json number --jq '.[].number') {
+            gh pr edit $branch --title $title --body-file $env:GITHUB_STEP_SUMMARY
+          }
+          else {
+            gh pr create --base master --head $branch --title $title --body-file $env:GITHUB_STEP_SUMMARY
+          }
