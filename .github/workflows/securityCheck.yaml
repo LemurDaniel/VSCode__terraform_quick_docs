@@ -26,6 +26,8 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+          # Stage install drift (e.g. lockfile version), so only audit fix changes count
+          git add -A
 
       - name: Audit and fix (including breaking changes)
         id: audit
@@ -43,7 +45,8 @@ jobs:
 
           "| Package | Before | After |", "|---|---|---|", $summary, "" | Tee-Object "$env:RUNNER_TEMP/pr-body.md" -Append | Out-File $env:GITHUB_STEP_SUMMARY -Append
 
-          $changed = [bool](git status --porcelain -- '*package-lock.json' '*package.json')
+          # Unstaged changes only, the install drift is already staged
+          $changed = [bool](git diff --name-only -- '*package-lock.json' '*package.json')
           "changed=$($changed.ToString().ToLower())" >> $env:GITHUB_OUTPUT
 
       - name: Detect breaking changes

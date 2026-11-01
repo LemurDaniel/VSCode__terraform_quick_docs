@@ -1,3 +1,10 @@
+## [1.0.18]
+
+### Update
+
+- Fix: Inline function links now match whitespace before the parenthesis
+- Lint: remove useless regex escapes and unreachable code
+
 ## [1.0.17]
 
 ### Update

@@ -42,7 +42,7 @@ class Registry {
 
     async get(api, additionalCacheInfo = '', ttl = Number.MAX_SAFE_INTEGER) {
 
-        const path = `/${api}`.replace(/[\/]+/g, '/')
+        const path = `/${api}`.replace(/[/]+/g, '/')
         const cachePath = `${path}/${additionalCacheInfo}`
 
         const cached = await Cache.fetch(Settings.clientConnection, cachePath)
@@ -83,7 +83,7 @@ class Registry {
             for (const [name, data] of Object.entries(terraform.requiredProviders)) {
 
                 const providerSource = data.source.toLowerCase()
-                const fsPathSegments = fullPath.split(/[\/\\]+/).length
+                const fsPathSegments = fullPath.split(/[/\\]+/).length
                 const configuredProvider = providersInConfiguration[providerSource]
                 if (null != configuredProvider && fsPathSegments >= configuredProvider.segments) {
                     continue
@@ -91,9 +91,9 @@ class Registry {
 
 
                 const configurationDataBlock = {
-                    name: providerSource.split(/[\/]+/)[1],
+                    name: providerSource.split(/[/]+/)[1],
                     identifier: providerSource,
-                    namespace: providerSource.split(/[\/]+/)[0],
+                    namespace: providerSource.split(/[/]+/)[0],
                     version: data.version ?? configuredProvider?.version,
                     fsPath: fullPath,
                     segments: fsPathSegments,
@@ -201,8 +201,8 @@ class Registry {
         if (null == providerInfo || providerInfo.errors?.at(0)?.includes('not found')) {
             throw new Registry.ProviderNotFoundError({
                 identifier: identifier,
-                namespace: identifier.split(/[\/]+/)[0],
-                name: identifier.split(/[\/]+/)[1]
+                namespace: identifier.split(/[/]+/)[0],
+                name: identifier.split(/[/]+/)[1]
             })
         }
 

@@ -81,13 +81,13 @@ class ProviderView {
     }
 
     containsPath(path, subpath) {
-        return path.replace(/[\/\\]+/g, '/').includes(subpath.replace(/[\/\\]+/g, '/'))
+        return path.replace(/[/\\]+/g, '/').includes(subpath.replace(/[/\\]+/g, '/'))
     }
     reducePath(path, start, end = undefined) {
-        return path.split(/[\/\\]+/).slice(start, end).join('/')
+        return path.split(/[/\\]+/).slice(start, end).join('/')
     }
     pathSegment(path, segment) {
-        return path.split(/[\/\\]+/)[segment]
+        return path.split(/[/\\]+/)[segment]
     }
 
     // returns topmost required_providers of configurations in all workspaces
