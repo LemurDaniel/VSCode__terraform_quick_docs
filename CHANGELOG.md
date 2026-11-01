@@ -1,3 +1,9 @@
+## [1.0.17]
+
+### Update
+
+- Deleted partner-provider [aristanetworks/cloudeos](https://github.com/aristanetworks/terraform-provider-cloudeos)
+
 ## [1.0.16]
 
 ### Update
