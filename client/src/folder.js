@@ -42,7 +42,7 @@ class Folder {
     add(path, payload = null, properties = null) {
 
         let node = this
-        const pathArray = path.replace(/[\/\\]+/g, '/').split('/').filter(segment => segment.length > 0)
+        const pathArray = path.replace(/[/\\]+/g, '/').split('/').filter(segment => segment.length > 0)
 
         for (const segment of pathArray) {
 

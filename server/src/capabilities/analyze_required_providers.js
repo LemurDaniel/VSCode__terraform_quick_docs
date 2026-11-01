@@ -10,7 +10,7 @@ function* readDirectory(fspath, recursive, recursiondepth = 0) {
 
     if (recursiondepth >= MAX_RECURSION_DEPTH) return
 
-    fspath = fspath.replace(/[\/\\]+/g, '/')
+    fspath = fspath.replace(/[/\\]+/g, '/')
 
     const directoryQueue = []
     for (const filename of fs.readdirSync(fspath)) {
@@ -176,7 +176,7 @@ function removeRequiredProvders(fsPath) {
 // Find required provider definition based on filepath going upwards to parent directories
 async function findRequiredProvider(fsPath, providerShortName) {
 
-    const segements = fsPath.split(/[\/\\]+/)
+    const segements = fsPath.split(/[/\\]+/)
 
     const targetProvider = {
         version: null,

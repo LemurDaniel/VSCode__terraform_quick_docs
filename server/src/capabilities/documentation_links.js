@@ -92,8 +92,8 @@ async function handleProviderModule(document, position) {
             else continue
         }
 
-        if (line.match(/\s*version\s*=\s*"[\d\.]+"/)) {
-            version = line.match(/=\s*"[\d\.]+"/)[0].replace(/[="]+/g, '').trim()
+        if (line.match(/\s*version\s*=\s*"[\d.]+"/)) {
+            version = line.match(/=\s*"[\d.]+"/)[0].replace(/[="]+/g, '').trim()
         }
         else if (line.match(/\s*source\s*=\s*"[^"]+"/)) {
             source = line.match(/=\s*"[^"]+"/)[0].replace(/[="]+/g, '').trim()
@@ -137,7 +137,7 @@ async function handleProviderModule(document, position) {
     }
 
     // unprefixed github.com URLs or unprefixed bitbucket.org URLs
-    if (Settings.supportOtherModuleSource && source.match(/github\.com[:\/]?/i) || source.match(/bitbucket\.org\//i)) {
+    if (Settings.supportOtherModuleSource && source.match(/github\.com[:/]?/i) || source.match(/bitbucket\.org\//i)) {
 
         const url = source
             .replace(/git@github.com:/i, 'github.com/').replace(/\.git/, '')
@@ -223,7 +223,7 @@ async function getLinkForPosition(document, position) {
 
     // Inline function elements
     for (const functionInfo of Registry.instance.getFunctionsFlat()) {
-        for (const inlineResource of fullLine.matchAll(new RegExp(`[^a-z]${functionInfo.title}[\s]*[\(]+`, 'gi'))) {
+        for (const inlineResource of fullLine.matchAll(new RegExp(`[^a-z]${functionInfo.title}[\\s]*[\\(]+`, 'gi'))) {
             const inRange = position.character >= inlineResource.index &&
                 position.character <= (inlineResource.index + inlineResource.at(0).length)
             if (!inRange) continue
