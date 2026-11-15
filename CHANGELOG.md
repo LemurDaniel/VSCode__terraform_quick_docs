@@ -1,3 +1,9 @@
+## [1.0.19]
+
+### Update
+
+- Add new partner-provider [PureStorage-OpenConnect/everpure-azure](https://github.com/PureStorage-OpenConnect/terraform-provider-everpure-azure)
+
 ## [1.0.18]
 
 ### Update
